@@ -6,17 +6,18 @@ import { Plus } from '@element-plus/icons-vue'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import { artPublishService } from '@/api/article.js'
+import lodash from 'lodash'
 const visibleDrawer = ref(false) //控制抽屉显示隐藏
-const defaultForm = ref({
+const defaultForm = {
   //默认数据
   title: '123',
   cate_id: '',
   cover_img: '',
   content: '',
   state: ''
-})
+}
 
-const formModel = ref({ ...defaultForm })
+const formModel = ref(lodash.cloneDeep(defaultForm))
 const imgUrl = ref('') //图片
 const onUploadFile = (uploadFile) => {
   imgUrl.value = URL.createObjectURL(uploadFile.raw) //预览图片
@@ -47,7 +48,7 @@ const open = (row) => {
   if (row.id) {
     console.log('回显')
   } else {
-    formModel.value = { ...defaultForm }
+    formModel.value = lodash.cloneDeep(defaultForm)
     console.log('添加')
   }
 }
